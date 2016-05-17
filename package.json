@@ -1,0 +1,41 @@
+{
+  "name": "order-molly",
+  "version": "1.0.0",
+  "description": "\"Ordering\" app to forefront value of work and workers in the current economy",
+  "main": "index.js",
+  "config": {
+    "requireargs": "--require react --require react-dom",
+    "externalargs": "--external react --external react-dom"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:scripts:vendor": "browserify $npm_package_config_requireargs --debug -p [minifyify --map vendor.min.js.map --output js/vendor.min.js.map] > js/vendor.min.js",
+    "build:scripts:app": "browserify $npm_package_config_externalargs --debug -p [ minifyify --map app.min.js.map --output js/app.min.js.map ] -t [ babelify --presets [ es2015 react ] ] --standalone FarmersMarkets js/src/app.js > js/app.min.js",
+    "build:scripts": "npm run build:scripts:vendor && npm run build:scripts:app",
+    "build:styles:app": "mkdir -p css && node-sass sass/styles.scss css/styles.css",
+    "build:styles": "run-p build:styles:*",
+    "build": "run-p build:scripts build:styles",
+    "watch:scripts:app": "watchify $npm_package_config_eternalargs --debug -p [ minifyify --map app.min.js.map --output js/app.min.js.map ] -t [ babelify --presets [ es2015 react ] ] --standalone FarmersMarkets --outfile js/app.min.js js/src/app.js",
+    "watch:styles:app": "node-sass --watch sass --output css",
+    "watch": "run-p watch:**",
+    "serve": "node index.js"
+  },
+  "author": "Geoff Hing <geoffhing@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4",
+    "socket.io": "^1.4.6",
+    "react": "^15.0.2",
+    "react-dom": "^15.0.2"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babelify": "^7.3.0",
+    "browserify": "^10.2.4",
+    "minifyify": "^7.3.3",
+    "node-sass": "^3.7.0",
+    "npm-run-all": "^2.1.0",
+    "watchify": "^3.7.0"
+  }
+}
