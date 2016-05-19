@@ -10,12 +10,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:scripts:vendor": "browserify $npm_package_config_requireargs --debug -p [minifyify --map vendor.min.js.map --output js/vendor.min.js.map] > js/vendor.min.js",
-    "build:scripts:app": "browserify $npm_package_config_externalargs --debug -p [ minifyify --map app.min.js.map --output js/app.min.js.map ] -t [ babelify --presets [ es2015 react ] ] --standalone FarmersMarkets js/src/app.js > js/app.min.js",
+    "build:scripts:app": "browserify $npm_package_config_externalargs --debug -p [ minifyify --map app.min.js.map --output js/app.min.js.map ] -t [ babelify --presets [ es2015 react ] ] --standalone OrderMolly js/src/app.js > js/app.min.js",
     "build:scripts": "npm run build:scripts:vendor && npm run build:scripts:app",
     "build:styles:app": "mkdir -p css && node-sass sass/styles.scss css/styles.css",
     "build:styles": "run-p build:styles:*",
     "build": "run-p build:scripts build:styles",
-    "watch:scripts:app": "watchify $npm_package_config_eternalargs --debug -p [ minifyify --map app.min.js.map --output js/app.min.js.map ] -t [ babelify --presets [ es2015 react ] ] --standalone FarmersMarkets --outfile js/app.min.js js/src/app.js",
+    "watch:scripts:app": "watchify $npm_package_config_eternalargs --debug -p [ minifyify --map app.min.js.map --output js/app.min.js.map ] -t [ babelify --presets [ es2015 react ] ] --standalone OrderMolly --outfile js/app.min.js js/src/app.js",
     "watch:styles:app": "node-sass --watch sass --output css",
     "watch": "run-p watch:**",
     "serve": "node index.js"
@@ -23,10 +23,11 @@
   "author": "Geoff Hing <geoffhing@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "bootstrap": "^4.0.0-alpha.2",
     "express": "^4.13.4",
-    "socket.io": "^1.4.6",
     "react": "^15.0.2",
-    "react-dom": "^15.0.2"
+    "react-dom": "^15.0.2",
+    "socket.io": "^1.4.6"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.9.0",
