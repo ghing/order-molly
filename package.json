@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "\"Ordering\" app to forefront value of work and workers in the current economy",
   "main": "index.js",
+  "repository": "https://github.com/ghing/order-molly.git",
   "config": {
     "requireargs": "--require react --require react-dom --require immutable --require uuid",
     "externalargs": "--external react --external react-dom --external immutable --external uuid"
