@@ -13,9 +13,34 @@ const OrderMollyAdminApp = React.createClass({
   },
 
   render: function() {
+    let newOrdersHeading = false;
+    let newOrders = [];
+    let filledOrdersHeading = false;
+    let filledOrders = [];
+
+    this.state.orders.forEach(order => {
+      if (order.get('status') == 'new') {
+        newOrders.push(order);
+      }
+      else {
+        filledOrders.push(order);
+      }
+    });
+
+    if (newOrders.length) {
+      newOrdersHeading = <h2>New orders</h2>;
+    }
+
+    if (filledOrders.length) {
+      filledOrdersHeading = <h2>Filled orders</h2>;
+    }
+
     return (
       <div className="order-molly-admin-app">
-        <AdminOrderList orders={this.state.orders.toList()} handleComplete={this.handleComplete} />
+        {newOrdersHeading}
+        <AdminOrderList orders={newOrders} handleComplete={this.handleComplete} />
+        {filledOrdersHeading}
+        <AdminOrderList orders={filledOrders} handleComplete={this.handleComplete} />
       </div>
     );
   },
