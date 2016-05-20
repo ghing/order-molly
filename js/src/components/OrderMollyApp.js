@@ -12,7 +12,7 @@ const OrderMollyApp = React.createClass({
   },
 
   handleOrder: function(item, name) {
-    this.props.socket.emit('order', item, name);
+    this.props.socket.emit('order', this.props.socket.id, item, name);
   }
 });
 

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import OrderMollyApp from './components/OrderMollyApp';
+import OrderMollyAdminApp from './components/OrderMollyAdminApp';
 
 const ITEMS = [
   "A hug",
@@ -14,6 +15,15 @@ export class App {
     ReactDOM.render(
       <OrderMollyApp socket={options.socket}
                      items={ITEMS} />,
+      options.container
+    );
+  }
+}
+
+export class AdminApp {
+  constructor(options) {
+    ReactDOM.render(
+      <OrderMollyAdminApp socket={options.socket} />,
       options.container
     );
   }

@@ -10,6 +10,10 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/admin', function(req, res) {
+  res.sendFile(__dirname + '/admin.html');
+});
+
 io.on('connection', function(socket) {
   console.log('a user connected');
 
@@ -17,8 +21,13 @@ io.on('connection', function(socket) {
     console.log('user disconnected');
   });
 
-  socket.on('order', function(item, name) {
-    console.log(name + " ordered " + item);
+  socket.on('add:admin', function() {
+    socket.join('admins');
+    console.log("Added admin " + socket.id);
+  });
+
+  socket.on('order', function(id, item, name) {
+    socket.to('admins').emit('receive:order', id, item, name);
   });
 });
 
