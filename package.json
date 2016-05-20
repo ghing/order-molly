@@ -5,8 +5,8 @@
   "main": "index.js",
   "repository": "https://github.com/ghing/order-molly.git",
   "config": {
-    "requireargs": "--require react --require react-dom --require immutable --require uuid",
-    "externalargs": "--external react --external react-dom --external immutable --external uuid"
+    "requireargs": "--require react --require react-dom --require immutable --require uuid --require knuth-shuffle",
+    "externalargs": "--external react --external react-dom --external immutable --external uuid --external knuth-shuffle"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -27,6 +27,7 @@
     "bootstrap": "^4.0.0-alpha.2",
     "express": "^4.13.4",
     "immutable": "^3.8.1",
+    "knuth-shuffle": "^1.0.1",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "socket.io": "^1.4.6",

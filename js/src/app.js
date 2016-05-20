@@ -5,9 +5,29 @@ import OrderMollyApp from './components/OrderMollyApp';
 import OrderMollyAdminApp from './components/OrderMollyAdminApp';
 
 const ITEMS = [
-  "A hug",
-  "A haiku",
-  "A high five"
+  "hug",
+  "high five",
+  "ghost story",
+  "recipe",
+  "factoid",
+  "restaurant recommendation",
+  "spelling",
+  "joke",
+  "lie",
+  "hair",
+  "apology",
+  "drop of blood",
+  "sweat",
+  "dare",
+  "gardening advice",
+  "shoulder to cry on",
+  "listening ear",
+  "shared outrage",
+  "vegetable identification",
+  "earnest eye contact",
+  "a boost",
+  "one chorus by a 90s female vocal group",
+  "bad dance move"
 ];
 
 export class App {

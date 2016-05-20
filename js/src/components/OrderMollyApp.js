@@ -1,5 +1,6 @@
 import Immutable from 'immutable';
 import React from 'react';
+import {knuthShuffle} from 'knuth-shuffle';
 
 import ItemList from './ItemList';
 import NotificationCenter from './NotificationCenter';
@@ -16,10 +17,12 @@ const OrderMollyApp = React.createClass({
   },
 
   render: function() {
+    let items = knuthShuffle(this.props.items).slice(0, 5);
+
     return (
       <div className="order-molly-app">
         <NotificationCenter notifications={this.state.notifications.toArray()} />
-        <ItemList items={this.props.items} handleOrder={this.handleOrder} />
+        <ItemList items={items} handleOrder={this.handleOrder} />
       </div>
     );
   },
