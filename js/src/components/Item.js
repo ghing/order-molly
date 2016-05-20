@@ -15,7 +15,7 @@ const Item = React.createClass({
       contents = <a href="#" onClick={this.showForm}>{this.props.item}</a>
     }
     else {
-      contents = <OrderForm onSubmit={this.handleFormSubmit} />;
+      contents = <OrderForm onSubmit={this.handleFormSubmit} onReset={this.handleFormReset} />;
     };
 
     return (
@@ -33,6 +33,12 @@ const Item = React.createClass({
 
   handleFormSubmit: function(name) {
     this.props.handleOrder(this.props.item, name);
+    this.setState({
+      show: 'item'
+    });
+  },
+
+  handleFormReset: function() {
     this.setState({
       show: 'item'
     });
