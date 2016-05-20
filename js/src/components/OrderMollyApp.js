@@ -30,7 +30,6 @@ const OrderMollyApp = React.createClass({
 
   handleOrderCompleteNotification: function(item, name) {
     let msg = "Your order for " + item + " is ready. Raise your hand!";
-    console.log(msg);
     this.setState({
       notifications: this.state.notifications.push(msg)
     });
