@@ -29,6 +29,11 @@ io.on('connection', function(socket) {
   socket.on('order', function(id, item, name) {
     socket.to('admins').emit('receive:order', id, item, name);
   });
+
+  socket.on('complete:order', function(id, item, name) {
+    console.log("Order of " + item + " for " + name + "(" + id + ")" + " is complete ");
+    socket.to('/#' + id).emit('notify:order:complete', item, name);
+  });
 });
 
 http.listen(3000, function(){

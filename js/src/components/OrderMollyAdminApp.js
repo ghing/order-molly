@@ -15,7 +15,7 @@ const OrderMollyAdminApp = React.createClass({
   render: function() {
     return (
       <div className="order-molly-admin-app">
-        <AdminOrderList orders={this.state.orders.toList()} />
+        <AdminOrderList orders={this.state.orders.toList()} handleComplete={this.handleComplete} />
       </div>
     );
   },
@@ -36,6 +36,13 @@ const OrderMollyAdminApp = React.createClass({
         status: 'new'
       }))
     });
+  },
+
+  handleComplete: function(order) {
+    this.setState({
+      orders: this.state.orders.set(order.get('orderId'), order.set('status', 'complete'))
+    });
+    this.props.socket.emit('complete:order', order.get('userId'), order.get('item'), order.get('name'));
   }
 });
 

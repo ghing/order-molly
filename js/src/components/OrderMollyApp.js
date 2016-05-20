@@ -1,11 +1,24 @@
+import Immutable from 'immutable';
 import React from 'react';
 
 import ItemList from './ItemList';
+import NotificationCenter from './NotificationCenter';
 
 const OrderMollyApp = React.createClass({
+  getInitialState: function() {
+    return {
+      notifications: new Immutable.List() 
+    };
+  },
+
+  componentDidMount: function() {
+    this.props.socket.on('notify:order:complete', this.handleOrderCompleteNotification);
+  },
+
   render: function() {
     return (
       <div className="order-molly-app">
+        <NotificationCenter notifications={this.state.notifications.toArray()} />
         <ItemList items={this.props.items} handleOrder={this.handleOrder} />
       </div>
     );
@@ -13,6 +26,14 @@ const OrderMollyApp = React.createClass({
 
   handleOrder: function(item, name) {
     this.props.socket.emit('order', this.props.socket.id, item, name);
+  },
+
+  handleOrderCompleteNotification: function(item, name) {
+    let msg = "Your order for " + item + " is ready. Raise your hand!";
+    console.log(msg);
+    this.setState({
+      notifications: this.state.notifications.push(msg)
+    });
   }
 });
 
