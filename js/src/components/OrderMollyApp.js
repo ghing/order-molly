@@ -1,14 +1,20 @@
 import Immutable from 'immutable';
 import React from 'react';
-import {knuthShuffle} from 'knuth-shuffle';
 
 import ItemList from './ItemList';
 import NotificationCenter from './NotificationCenter';
 
 const OrderMollyApp = React.createClass({
+  getDefaultProps: function() {
+    return {
+      numItems: 5
+    };
+  },
+
   getInitialState: function() {
     return {
-      notifications: new Immutable.List() 
+      notifications: new Immutable.List(),
+      ordered: new Immutable.Set()
     };
   },
 
@@ -16,8 +22,23 @@ const OrderMollyApp = React.createClass({
     this.props.socket.on('notify:order:complete', this.handleOrderCompleteNotification);
   },
 
+  getItems: function(allItems, numItems, ordered) {
+    let items = [],
+        i,
+        item; 
+
+    for (i = 0; items.length < numItems && i < allItems.length; i++) {
+      item = allItems[i];
+      if (!ordered.has(item)) {
+        items.push(item);
+      }
+    }
+
+    return items;
+  },
+
   render: function() {
-    let items = knuthShuffle(this.props.items).slice(0, 5);
+    let items = this.getItems(this.props.items, this.props.numItems, this.state.ordered);
 
     return (
       <div className="order-molly-app">
@@ -28,6 +49,9 @@ const OrderMollyApp = React.createClass({
   },
 
   handleOrder: function(item, name) {
+    this.setState({
+      ordered: this.state.ordered.add(item)
+    });
     this.props.socket.emit('order', this.props.socket.id, item, name);
   },
 

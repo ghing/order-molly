@@ -1,3 +1,4 @@
+import {knuthShuffle} from 'knuth-shuffle';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -34,7 +35,7 @@ export class App {
   constructor(options) {
     ReactDOM.render(
       <OrderMollyApp socket={options.socket}
-                     items={ITEMS} />,
+                     items={knuthShuffle(ITEMS)} />,
       options.container
     );
   }
