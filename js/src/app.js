@@ -43,9 +43,32 @@ export class App {
 
 export class AdminApp {
   constructor(options) {
-    ReactDOM.render(
-      <OrderMollyAdminApp socket={options.socket} />,
-      options.container
-    );
+    try {
+      // Fix up for prefixing
+      let AudioContext = window.AudioContext||window.webkitAudioContext;
+      let context = new AudioContext();
+      let request = new XMLHttpRequest();
+      request.open('GET', '/sounds/ding.mp3', true);
+      request.responseType = 'arraybuffer';
+
+      // Decode asynchronously
+      request.onload = function() {
+        context.decodeAudioData(request.response, function(buffer) {
+          ReactDOM.render(
+            <OrderMollyAdminApp socket={options.socket} notificationSound={buffer} audioContext={context} />,
+            options.container
+          );
+        });
+      }
+      request.send();
+    }
+    catch(e) {
+      console.log("Web Audio not supported on this device");   
+      ReactDOM.render(
+        <OrderMollyAdminApp socket={options.socket} />,
+        options.container
+      );
+    }
+
   }
 }

@@ -4,7 +4,6 @@ import uuid from 'uuid';
 
 import AdminOrderList from './AdminOrderList';
 
-// TODO: Add logic to complete orders
 const OrderMollyAdminApp = React.createClass({
   getInitialState: function() {
     return {
@@ -51,6 +50,7 @@ const OrderMollyAdminApp = React.createClass({
   },
 
   handleOrder: function(userId, item, name) {
+    this.playNotificationSound();
     let orderId = uuid.v1();
     this.setState({
       orders: this.state.orders.set(orderId, Immutable.Map({
@@ -61,6 +61,16 @@ const OrderMollyAdminApp = React.createClass({
         status: 'new'
       }))
     });
+  },
+
+  playNotificationSound: function() {
+    console.log("HERE");
+    if (this.props.notificationSound && this.props.audioContext) {
+      let source = this.props.audioContext.createBufferSource(); // creates a sound source
+      source.buffer = this.props.notificationSound; // tell the source which sound to play
+      source.connect(this.props.audioContext.destination); // connect the source to the context's destination (the speakers)
+      source.start(0); // play the source now
+    }
   },
 
   handleComplete: function(order) {

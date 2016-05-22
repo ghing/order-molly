@@ -7,6 +7,7 @@ var PORT = process.env.ORDER_MOLLY_PORT || 3000;
 
 app.use('/js', express.static('js'));
 app.use('/css', express.static('css'));
+app.use('/sounds', express.static('sounds'));
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
