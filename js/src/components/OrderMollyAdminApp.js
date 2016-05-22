@@ -7,7 +7,8 @@ import AdminOrderList from './AdminOrderList';
 const OrderMollyAdminApp = React.createClass({
   getInitialState: function() {
     return {
-      orders: new Immutable.OrderedMap() 
+      orders: new Immutable.OrderedMap(),
+      soundPlayed: false
     };
   },
 
@@ -16,6 +17,7 @@ const OrderMollyAdminApp = React.createClass({
     let newOrders = [];
     let filledOrdersHeading = false;
     let filledOrders = [];
+    let startSoundsButton = false;
 
     this.state.orders.forEach(order => {
       if (order.get('status') == 'new') {
@@ -34,8 +36,13 @@ const OrderMollyAdminApp = React.createClass({
       filledOrdersHeading = <h2>Filled orders</h2>;
     }
 
+    if (!this.state.soundPlayed) {
+      startSoundsButton = <button className="btn" onClick={this.handleClickStart}>Start</button>;
+    }
+
     return (
       <div className="order-molly-admin-app">
+        {startSoundsButton}
         {newOrdersHeading}
         <AdminOrderList orders={newOrders} handleComplete={this.handleComplete} />
         {filledOrdersHeading}
@@ -47,6 +54,13 @@ const OrderMollyAdminApp = React.createClass({
   componentDidMount: function() {
     this.props.socket.emit('add:admin');
     this.props.socket.on('receive:order', this.handleOrder);
+  },
+
+  handleClickStart: function(e) {
+    this.playNotificationSound();
+    this.setState({
+      soundPlayed: true
+    });
   },
 
   handleOrder: function(userId, item, name) {
@@ -64,7 +78,6 @@ const OrderMollyAdminApp = React.createClass({
   },
 
   playNotificationSound: function() {
-    console.log("HERE");
     if (this.props.notificationSound && this.props.audioContext) {
       let source = this.props.audioContext.createBufferSource(); // creates a sound source
       source.buffer = this.props.notificationSound; // tell the source which sound to play
